@@ -2,7 +2,9 @@ package abstractas;
 
 import java.util.List;
 
-public abstract class HabitacionGeneral <T> {
+import Interfaces.Habitacion;
+
+public abstract class HabitacionGeneral implements Habitacion {
     protected String tipo;
     protected double precio;
     protected List<Comodidad> comodidades;
