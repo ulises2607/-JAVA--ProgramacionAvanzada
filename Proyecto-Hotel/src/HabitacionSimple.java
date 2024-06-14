@@ -1,26 +1,26 @@
 import java.time.LocalDate;
 import java.util.List;
 
-import abstractas.Comodidad;
 import abstractas.HabitacionGeneral;
 
-public class HabitacionSimple extends HabitacionGeneral  {
+public class HabitacionSimple extends HabitacionGeneral<ComodidadBasica> {
 
-    public HabitacionSimple(String tipo, double precio, List<Comodidad> comodidades) {
+    public HabitacionSimple(String tipo, double precio, List<ComodidadBasica> comodidades) {
         super(tipo, precio, comodidades);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
-    public boolean estaDisplonible(LocalDate fechaInicio, LocalDate fechaFin) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'estaDisplonible'");
+    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin) {
+        int cantReservas = App.getGestor().contarReservas(this, fechaInicio, fechaFin);
+        return cantReservas < 4;
     }
 
     @Override
     public double calcularPrecioTotal(LocalDate fechaInicio, LocalDate fechaFin) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularPrecioTotal'");
+        double total = getPrecio();
+        for (ComodidadBasica c : getComodidades()) {
+            total += c.calcularCosto(fechaInicio, fechaFin);
+        }
+        return total;
     }
-
 }

@@ -1,27 +1,27 @@
+import java.time.LocalDate;
 import java.util.List;
 
-import Interfaces.Reserva;
+import abstractas.Comodidad;
 import abstractas.HabitacionGeneral;
 
 public class GestorDisponibilidad {
-    private List<HabitacionGeneral> habitaciones;
+    @SuppressWarnings("unused")
+    private List<HabitacionGeneral<? extends Comodidad>> habitaciones;
     private List<Reserva> reservas;
     
-    public GestorDisponibilidad(List<HabitacionGeneral> habitaciones, List<Reserva> reservas){
+    public GestorDisponibilidad(List<HabitacionGeneral<? extends Comodidad>> habitaciones, List<Reserva> reservas){
         this.habitaciones = habitaciones;
         this.reservas = reservas;
     }
 
-    @SuppressWarnings("unlikely-arg-type")
-    public int contarReservas(List<HabitacionGeneral> habitacion){
-        int contador = 0;
-        for(Reserva reserva : reservas){
-            if(reserva.getHabitacion().equals(habitacion)){
-                contador++;
+   public int contarReservas(HabitacionGeneral<?> habitaciones, LocalDate fechaInicio, LocalDate fechaFin) {
+        int cantReservas = 0;
+        for (Reserva reserva : reservas) {
+            if (reserva.getHabitacion().equals(habitaciones) &&
+                (reserva.getFechaInicio().isBefore(fechaFin) && reserva.getFechaFin().isAfter(fechaInicio))) {
+                cantReservas++;
             }
         }
-        return contador;
+        return cantReservas;
     }
-
-    
 }

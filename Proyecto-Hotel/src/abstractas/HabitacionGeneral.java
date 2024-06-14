@@ -1,20 +1,22 @@
 package abstractas;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import Interfaces.Habitacion;
+import Interfaces.HabitacionInt;
 
-public abstract class HabitacionGeneral implements Habitacion {
+public abstract class HabitacionGeneral<T extends Comodidad> implements HabitacionInt<T> {
     protected String tipo;
     protected double precio;
-    protected List<Comodidad> comodidades;
+    protected List<T> comodidades;
 
-    public HabitacionGeneral(String tipo, double precio, List<Comodidad> comodidades){
+    public HabitacionGeneral(String tipo, double precio, List<T> comodidades){
         this.tipo = tipo;
         this.precio = precio;
         this.comodidades = comodidades;
     }
 
+    @Override
     public String getTipo() {
         return tipo;
     }
@@ -23,6 +25,7 @@ public abstract class HabitacionGeneral implements Habitacion {
         this.tipo = tipo;
     }
 
+    @Override
     public double getPrecio() {
         return precio;
     }
@@ -31,12 +34,17 @@ public abstract class HabitacionGeneral implements Habitacion {
         this.precio = precio;
     }
 
-    public List<Comodidad> getComodidades() {
+    @Override
+    public List<T> getComodidades() {
         return comodidades;
     }
 
-    public void setComodidades(List<Comodidad> comodidades) {
+    public void setComodidades(List<T> comodidades) {
         this.comodidades = comodidades;
     }
+
+    // Métodos abstractos 
     
+    public abstract boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin);
+    public abstract double calcularPrecioTotal(LocalDate fechaInicio, LocalDate fechaFin);
 }

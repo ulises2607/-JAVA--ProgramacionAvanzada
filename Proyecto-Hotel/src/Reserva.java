@@ -1,55 +1,60 @@
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
-import Interfaces.Habitacion;
+import Interfaces.ClienteInt;
+import Interfaces.HabitacionInt;
+import Interfaces.ReservaInt;
 
-public class Reserva implements Interfaces.Reserva{
-    private Cliente cliente;
-    private Habitacion habitacion;
-    LocalDate fechaInicio;
-    LocalDate fechaFin;
+public class Reserva implements ReservaInt {
+    private ClienteInt cliente;
+    private HabitacionInt<?> habitacion;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
 
-    public Reserva(Cliente cliente, Habitacion habitacion, LocalDate fechaInicio, LocalDate fechaFin){
+    public Reserva(ClienteInt cliente, HabitacionInt<?> habitacion, LocalDate fechaInicio, LocalDate fechaFin) {
         this.cliente = cliente;
         this.habitacion = habitacion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
 
-	@Override
-	public Interfaces.Cliente getCliente() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getCliente'");
-	}
-	@Override
-	public Habitacion getHabitacion() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getHabitacion'");
-	}
-	@Override
-	public LocalDate getFechaFin() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getFechaFin'");
-	}
-	@Override
-	public LocalDate getFechaInicio() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getFechaInicio'");
-	}
-	@Override
-	public double calcularCosto() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'calcularCosto'");
-	}
-	@Override
-	public void cancelarReserva() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'cancelarReserva'");
-	}
-	@Override
-	public void modificarFechas(LocalDate fechaInicio, LocalDate fechaFin) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'modificarFechas'");
-	}
-    
+    @Override
+    public ClienteInt getCliente() {
+        return cliente;
+    }
 
+    @Override
+    public HabitacionInt<?> getHabitacion() {
+        return habitacion;
+    }
+
+    @Override
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    @Override
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    @Override
+    public double calcularCosto() {
+        // Suponiendo que el costo se calcula en base al precio por día de la habitación
+        long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+        return dias * habitacion.getPrecio();
+    }
+
+    @Override
+    public void cancelarReserva() {
+        cliente.devolverPuntos(this);
+        System.out.println("Reserva cancelada");
+        System.out.println("Tambien se devolvieron los puntos acumulados por la reserva");
+    }
+
+    @Override
+    public void modificarFechas(LocalDate nuevaFechaInicio, LocalDate nuevaFechaFin) {
+        this.fechaInicio = nuevaFechaInicio;
+        this.fechaFin = nuevaFechaFin;
+    }
 }

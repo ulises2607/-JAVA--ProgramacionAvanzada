@@ -6,13 +6,18 @@ import abstractas.Comodidad;
 public class ComodidadPremium extends Comodidad {
     private String especialidad;
 
-    public ComodidadPremium(String nombre, double precio, String especialidad) {
-        super(nombre, precio);
+    public ComodidadPremium(String string, int i, String string2) {
+    }
+
+
+    public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
-       
     }
 
     
+    public String getEspecialidad(){
+        return this.especialidad;
+    }
     
     @Override
     public double calcularCosto(LocalDate fechaInicio, LocalDate fechaFin) {
@@ -20,7 +25,6 @@ public class ComodidadPremium extends Comodidad {
         double costo = dias * getPrecio();
         costo = costo + ((costo * 25) / 100);
         return costo;
-        
     }
 
 

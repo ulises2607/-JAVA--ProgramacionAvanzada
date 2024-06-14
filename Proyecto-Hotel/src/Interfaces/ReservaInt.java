@@ -2,9 +2,9 @@ package Interfaces;
 
 import java.time.LocalDate;
 
-public interface Reserva {
-    Cliente getCliente();
-    Habitacion getHabitacion();
+public interface ReservaInt {
+    ClienteInt getCliente();
+    HabitacionInt<?> getHabitacion();
     LocalDate getFechaFin();
     LocalDate getFechaInicio();
     double calcularCosto();

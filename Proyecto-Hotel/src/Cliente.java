@@ -1,12 +1,12 @@
-import Interfaces.Reserva;
+import Interfaces.ReservaInt;
 
-public class Cliente implements Interfaces.Cliente {
+public class Cliente implements Interfaces.ClienteInt {
     private String nombre;
     private Integer puntos;
 
-    public Cliente(String nombre, Integer puntos) {
+    public Cliente(String nombre) {
         this.nombre = nombre;
-        this.puntos = puntos;
+        this.puntos = 0;
     }
 
     @Override
@@ -20,8 +20,12 @@ public class Cliente implements Interfaces.Cliente {
     }
 
     @Override
-    public void acumularPuntos(Reserva reserva) {
-        puntos += (int) (puntos + (reserva.calcularCosto()/100));
+    public void acumularPuntos(ReservaInt reserva) {
+        puntos += (int) reserva.calcularCosto() / 100;
+    }
+    @Override
+    public void devolverPuntos(ReservaInt reserva) {
+        this.puntos -= (int) reserva.calcularCosto() / 100;
     }
     
 }
